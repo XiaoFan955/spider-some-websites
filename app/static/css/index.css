@@ -1,11 +1,14 @@
-td{
-    border: 1px black solid;
-}
 table{
     text-align:center;
     border-collapse:collapse;
     border: 1px black solid;
     margin:auto;
+}
+td{
+    border: 1px black solid;
+}
+th{
+    border: 1px black solid;
 }
 .row-split{
     background-color: #fb7299;

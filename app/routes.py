@@ -20,6 +20,7 @@ def getData():
     seasons_list = datas["data"]["items_lists"]["seasons_list"]
     series_list = datas["data"]["items_lists"]["series_list"]
     total_list = seasons_list + series_list
+    print(total_list)
     if not total_list:
         res_dict = {
             "total_list": None,

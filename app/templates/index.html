@@ -45,8 +45,13 @@
             let meta = series["meta"];
             let series_name = meta["name"];
             let series_views = 0;
-            html+='<tr><th>'+series_name+'</th></tr>';
-            html+='<tr><td>视频标题</td><td>播放量</td></tr>'
+            html+='<tr><th colspan="2">'+series_name+'</th></tr>';
+            if(!archives){
+                html+='<tr><th colspan="2">总播放量: '+series_views+'</th></tr>';
+                html+='<tr><td class="row-split" colspan="2"></td></tr>';
+                continue;
+            }
+            html+='<tr><td>视频标题</td><td>播放量</td></tr>';
             for(let j=0;j<archives.length;++j){
                 let data = archives[j];
                 let title = data["title"];
@@ -54,7 +59,7 @@
                 series_views += view;
                 html+='<tr><td>'+title+'</td><td>'+view+'</td></tr>'
             }
-            html+='<tr><th>总播放量: '+series_views+'</th></tr>';
+            html+='<tr><th colspan="2">总播放量: '+series_views+'</th></tr>';
             html+='<tr><td class="row-split" colspan="2"></td></tr>';
         }
         html += '</table>';
