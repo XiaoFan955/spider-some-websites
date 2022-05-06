@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>B站up专栏信息获取</title>
+    <link rel="stylesheet" href="../static/css/index.css">
+</head>
+<body>
+<input id="uidText" type="text" placeholder="请输入uid">
+<input id="getData" type="button" value="点击获取">
+<div id="tableContainer">
+
+</div>
+</body>
+<script src="../static/js/jquery.min.js"></script>
+<script>
+    $("#getData").on("click",function(){
+        let uid = $("#uidText").val();
+        if(!uid){
+            alert("请输入uid后再进行操作");
+            return;
+        }
+        params = {
+            "uid":uid
+        }
+        $.post({
+            url:"/bilibili/series",
+            data:params,
+            success:function(res){
+                //动态生成表格
+                if(res.haveData){
+                    let html = createTable(res.total_list);
+                    $("#tableContainer").html(html);
+                }else{
+                    alert(res.info);
+                }
+            }
+        })
+    })
+    function createTable(data_lists){
+        let html = '<table id="dataTable">';
+        for(let i=0;i<data_lists.length;++i){
+            let series = data_lists[i];
+            let archives = series["archives"];
+            let meta = series["meta"];
+            let series_name = meta["name"];
+            let series_views = 0;
+            html+='<tr><th>'+series_name+'</th></tr>';
+            html+='<tr><td>视频标题</td><td>播放量</td></tr>'
+            for(let j=0;j<archives.length;++j){
+                let data = archives[j];
+                let title = data["title"];
+                let view = data["stat"]["view"];
+                series_views += view;
+                html+='<tr><td>'+title+'</td><td>'+view+'</td></tr>'
+            }
+            html+='<tr><th>总播放量: '+series_views+'</th></tr>';
+            html+='<tr><td class="row-split" colspan="2"></td></tr>';
+        }
+        html += '</table>';
+        return html;
+    }
+</script>
+</html>
