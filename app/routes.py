@@ -3,6 +3,8 @@ from flask import Flask, request, render_template
 import urllib.request
 import json
 
+from app.dataSpider import get_data_list
+
 
 @app.route('/')
 def index():
@@ -13,14 +15,7 @@ def index():
 def getData():
     data = request.form
     uid = data["uid"]
-    url = f'https://api.bilibili.com/x/polymer/space/seasons_series_list?mid={uid}&page_num=1&page_size=20'
-    r = urllib.request.urlopen(url)
-    datas = r.read().decode('utf-8')
-    datas = json.loads(datas)
-    seasons_list = datas["data"]["items_lists"]["seasons_list"]
-    series_list = datas["data"]["items_lists"]["series_list"]
-    total_list = seasons_list + series_list
-    print(total_list)
+    total_list = get_data_list(uid)
     if not total_list:
         res_dict = {
             "total_list": None,

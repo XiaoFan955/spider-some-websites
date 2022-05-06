@@ -42,8 +42,7 @@
         for(let i=0;i<data_lists.length;++i){
             let series = data_lists[i];
             let archives = series["archives"];
-            let meta = series["meta"];
-            let series_name = meta["name"];
+            let series_name = series["name"];
             let series_views = 0;
             html+='<tr><th colspan="2">'+series_name+'</th></tr>';
             if(!archives){
