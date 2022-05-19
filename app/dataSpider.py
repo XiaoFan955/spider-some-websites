@@ -1,6 +1,3 @@
-# 根据season_id获取相关合集的所有视频名和播放量
-# def get_season_data(sid):
-#
 import json
 import urllib.request
 
@@ -19,9 +16,7 @@ def get_data_list(uid):
     datas = get_url_data(url)
     seasons_list = datas["data"]["items_lists"]["seasons_list"]
     series_list = datas["data"]["items_lists"]["series_list"]
-    print(series_list)
     total_list = seasons_list + series_list
-    print(total_list)
     res_list = []
     if not total_list:
         return res_list
@@ -43,7 +38,6 @@ def get_data_list(uid):
         sid = series_meta["series_id"]
         total_series = series_meta["total"]
         series_url = f'https://api.bilibili.com/x/series/archives?mid={uid}&series_id={sid}&only_normal=true&sort=desc&pn=1&ps={total_series}'
-        print(series_url)
         series_archives = get_url_data(series_url)["data"]["archives"]
         series_data = {
             "name": series_name,
